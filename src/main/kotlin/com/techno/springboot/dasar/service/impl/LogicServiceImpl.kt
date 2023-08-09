@@ -36,13 +36,13 @@ class LogicServiceImpl : LogicService {
 
     override fun calculator(operation: String,reqCalculator: ReqCalculator): ResBaseDto<ResCalculator> {
         val result = when (operation) {
-            "addition" -> (reqCalculator.valueA ?: 0).toInt() + (reqCalculator.valueB ?: 0).toInt()
-            "subtraction" -> (reqCalculator.valueA ?: 0).toInt() - (reqCalculator.valueB ?: 0).toInt()
-            "multiple" -> (reqCalculator.valueA ?: 0).toInt() * (reqCalculator.valueB ?: 0).toInt()
-            "division" -> (reqCalculator.valueA ?: 0).toFloat() / (reqCalculator.valueB ?: 0).toFloat()
+            "addition" -> (reqCalculator.valueA ?: 0f) + (reqCalculator.valueB ?: 0f)
+            "subtraction" -> (reqCalculator.valueA ?: 0f) - (reqCalculator.valueB ?: 0f)
+            "multiple" -> (reqCalculator.valueA ?: 0f) * (reqCalculator.valueB ?: 0f)
+            "division" -> (reqCalculator.valueA ?: 0f) / (reqCalculator.valueB ?: 0f)
             else -> throw IllegalArgumentException("Invalid operator")
         }
-        val resCalculator = ResCalculator(result.toFloat())
+        val resCalculator = ResCalculator(result)
         return ResBaseDto(data = resCalculator)
     }
 }
