@@ -11,4 +11,5 @@ interface LogicService {
     fun addOrEvent(number: Int) : String
     fun fullName(reqIdentitasDto: ReqIdentitasDto): ResBaseDto<ResFullNameDto>
     fun calculator(operation: String,reqCalculator: ReqCalculator): ResBaseDto<ResCalculator>
+
 }
