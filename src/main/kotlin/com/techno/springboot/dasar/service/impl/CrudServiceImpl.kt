@@ -5,6 +5,7 @@ import com.techno.springboot.dasar.domain.dto.response.ResBaseDto
 import com.techno.springboot.dasar.domain.dto.response.ResMahasiswaDto
 import com.techno.springboot.dasar.domain.entity.MahasiswaEntity
 import com.techno.springboot.dasar.domain.entity.ProdiEntity
+import com.techno.springboot.dasar.exception.CustomExceptionHandler
 import com.techno.springboot.dasar.repository.MahasiswaRepository
 import com.techno.springboot.dasar.repository.ProdiRepository
 import com.techno.springboot.dasar.service.CrudService
@@ -19,7 +20,7 @@ class CrudServiceImpl(
     override fun getAll(): ResBaseDto<ArrayList<ResMahasiswaDto>> {
         val data: MutableList<MahasiswaEntity> = mahasiswaRepository.findAll()
         if (data.isEmpty())
-            return ResBaseDto(false,"Data Not Found", null)
+            throw CustomExceptionHandler("Data Not Found")
         val response : ArrayList<ResMahasiswaDto> = ArrayList()
         data.forEach{
             response.add(
@@ -34,12 +35,11 @@ class CrudServiceImpl(
         }
         return ResBaseDto(data = response)
     }
-
     override fun getById(id: Long): ResBaseDto<ResMahasiswaDto>{
         val data = mahasiswaRepository.findById(id)
         if (data == null)
-            return ResBaseDto(false,"Data not found",null)
-        var response = ResMahasiswaDto(
+            throw CustomExceptionHandler("Data Not Found")
+        val response = ResMahasiswaDto(
             nim = data.nim!!,
             nama = data.nama!!,
             gender = data.gender!!,
@@ -48,10 +48,8 @@ class CrudServiceImpl(
         )
         return ResBaseDto(data = response)
     }
-
-
     override fun insert(reqMahasiswaDto: ReqMahasiswaDto): ResBaseDto<Any> {
-        val prodiEntity = prodiRepository.findById(UUID.fromString(reqMahasiswaDto.idProdi)) ?: return ResBaseDto(false, "Data not Found", null)
+        val prodiEntity = prodiRepository.findById(UUID.fromString(reqMahasiswaDto.idProdi)) ?: throw CustomExceptionHandler("ID Prodi Not Found")
         val data = MahasiswaEntity(
             nim = reqMahasiswaDto.nim,
             nama = reqMahasiswaDto.nama,
@@ -70,10 +68,9 @@ class CrudServiceImpl(
         return ResBaseDto(data = response)
     }
 
-
     override fun update(reqMahasiswaDto: ReqMahasiswaDto, id: Long): ResBaseDto<Any> {
-        val data = mahasiswaRepository.findById(id) ?: return ResBaseDto(false, "Data not Found", null)
-        val prodiEntity = prodiRepository.findById(UUID.fromString(reqMahasiswaDto.idProdi)) ?: return ResBaseDto(false, "Data not Found", null)
+        val data = mahasiswaRepository.findById(id) ?: throw CustomExceptionHandler("ID Prodi Not Found")
+        val prodiEntity = prodiRepository.findById(UUID.fromString(reqMahasiswaDto.idProdi.toString())) ?: return ResBaseDto(false, "Data not Found", null)
         val newData = data.copy(
             nim = reqMahasiswaDto.nim,
             nama = reqMahasiswaDto.nama,
