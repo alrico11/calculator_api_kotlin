@@ -17,7 +17,7 @@ data class ReqUserDto(
     @field:NotNull(message = "Field Username Not Null")
     @field:NotEmpty(message = "Field Username Not Empty")
     @field:Size(max = 32, message = "Field length must be at most 32 character")
-    @field:CustomFieldValidation(message = "Username is already taken")
+    @field:CustomFieldValidation()
     val username: String? = null,
 
     @field:NotNull(message = "Field email Not Null")

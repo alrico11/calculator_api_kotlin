@@ -28,4 +28,11 @@ class ErrorHandler {
         val response = ResBaseDto(false,exception.message!!, null, 400, "")
         return ResponseEntity.badRequest().body(response)
     }
+    @ExceptionHandler(Exception::class)
+    fun handlerException(exception: Exception): ResponseEntity<ResBaseDto<String>> {
+        println("Error General!!")
+        exception.printStackTrace()
+        val response = ResBaseDto(false,code = 400,errors = exception.message)
+        return ResponseEntity.badRequest().body(response)
+    }
 }

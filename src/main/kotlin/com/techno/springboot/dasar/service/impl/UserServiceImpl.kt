@@ -39,18 +39,13 @@ class UserServiceImpl(
     }
 
     override fun insert(reqUserDto: ReqUserDto): ResBaseDto<Any> {
-
-        val existingUser = userRepository.findByEmail(reqUserDto.email.toString())
-        if (existingUser != null) {
-            throw CustomExceptionHandler("NOT FOUND")
-        }
         val uuid = UUID.randomUUID()
         val data = UserEntity(
             id = uuid,
             name = reqUserDto.name!!,
             username = reqUserDto.username!!,
             email = reqUserDto.email!!,
-            password = reqUserDto.password
+            password = reqUserDto.password!!
         )
 
         val entity = userRepository.save(data)
