@@ -1,7 +1,7 @@
 package com.techno.springboot.dasar.controller
 
 import com.techno.springboot.dasar.domain.dto.request.ReqLoginDto
-import com.techno.springboot.dasar.domain.dto.request.ReqValidateUser
+import com.techno.springboot.dasar.domain.dto.request.ReqValidateUserDto
 import com.techno.springboot.dasar.domain.dto.response.ResBaseDto
 import com.techno.springboot.dasar.service.AuthService
 import org.springframework.http.ResponseEntity
@@ -24,8 +24,8 @@ class AuthController(
     }
 
     @PostMapping("/validate")
-    fun validateUser(@RequestBody reqValidateUser: ReqValidateUser): ResponseEntity<ResBaseDto<Any>> {
-        val response = authService.validateUser(reqValidateUser)
+    fun validateUser(@RequestBody reqValidateUserDto: ReqValidateUserDto): ResponseEntity<ResBaseDto<Any>> {
+        val response = authService.validateUser(reqValidateUserDto)
         return ResponseEntity.ok().body(response)
     }
 }

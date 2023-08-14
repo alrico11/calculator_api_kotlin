@@ -1,5 +1,5 @@
 package com.techno.springboot.dasar.domain.dto.request
 
-class ReqValidateUser {
+class ReqValidateUserDto {
     val token: String? = null
 }

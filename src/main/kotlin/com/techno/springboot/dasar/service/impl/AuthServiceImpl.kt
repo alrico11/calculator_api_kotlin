@@ -1,17 +1,15 @@
 package com.techno.springboot.dasar.service.impl
 
 import com.techno.springboot.dasar.domain.dto.request.ReqLoginDto
-import com.techno.springboot.dasar.domain.dto.request.ReqValidateUser
+import com.techno.springboot.dasar.domain.dto.request.ReqValidateUserDto
 import com.techno.springboot.dasar.domain.dto.response.ResBaseDto
 import com.techno.springboot.dasar.domain.entity.TokenEntity
-import com.techno.springboot.dasar.domain.entity.UserEntity
 import com.techno.springboot.dasar.exception.CustomExceptionHandler
 import com.techno.springboot.dasar.repository.AuthRepository
 import com.techno.springboot.dasar.repository.UserRepository
 import com.techno.springboot.dasar.service.AuthService
 import com.techno.springboot.dasar.util.JWTGenerator
 import org.springframework.stereotype.Service
-import java.sql.Date
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -43,8 +41,8 @@ data class AuthServiceImpl(
         return ResBaseDto(data = mapOf("uuid" to data.id,"token" to token))
     }
 
-    override fun validateUser(reqValidateUser: ReqValidateUser): ResBaseDto<Any> {
-        val data = authRepository.findIdByToken(reqValidateUser.token.toString()) ?: throw CustomExceptionHandler("Token Not Found or Expired")
+    override fun validateUser(reqValidateUserDto: ReqValidateUserDto): ResBaseDto<Any> {
+        val data = authRepository.findIdByToken(reqValidateUserDto.token.toString()) ?: throw CustomExceptionHandler("Token Not Found or Expired")
         println(data.idUser)
         val userMap = mapOf(
             "id" to data.idUser?.id,
