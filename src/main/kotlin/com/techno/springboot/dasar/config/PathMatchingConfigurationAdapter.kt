@@ -9,6 +9,7 @@ class PathMatchingConfigurationAdapter(
     val requestInterceptor: RequestInterceptor
 ): WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
-        registry.addInterceptor(requestInterceptor).addPathPatterns("/v1/api/user")
+        registry
+            .addInterceptor(requestInterceptor).addPathPatterns("/v1/api/user", "/v1/api/validate", "/v1/api/login")
     }
 }

@@ -22,6 +22,12 @@ class RequestInterceptor(
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         val apiKey = request.getHeader("api-key")
         val auth = request.getHeader("authorization")
+        if (request.servletPath == "/v1/api/login") {
+            if (apiKey.isNullOrEmpty()) {
+                throw CustomExceptionHandler("API Key is required")
+            }
+            return true
+        }
         val data = authRepository.findIdByToken(auth) ?: throw CustomExceptionHandler("Token not valid")
         val isTokenValid = authService.validateToken(auth)
 
@@ -36,6 +42,7 @@ class RequestInterceptor(
         }
         return true
     }
+
 
     override fun postHandle(
         request: HttpServletRequest,
