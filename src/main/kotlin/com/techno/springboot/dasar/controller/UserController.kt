@@ -22,7 +22,7 @@ import java.util.UUID
 import javax.validation.Valid
 
 @RestController
-@RequestMapping("/v1/crud")
+@RequestMapping("/v1/api")
 
 class UserController(
     private val userService: UserService,

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.util.*
 @Repository
 interface UserRepository : JpaRepository<UserEntity, String>{
-    fun findByEmail(email: String): UserEntity?
+    fun findByUsername(username: String): UserEntity?
     fun findById(id: UUID): UserEntity?
     @Transactional
     fun deleteById(id: UUID)
