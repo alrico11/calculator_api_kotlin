@@ -31,8 +31,8 @@ data class AuthServiceImpl(
         var expiredJwt = System.currentTimeMillis()+3600000L
         val expiredDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(expiredJwt),ZoneId.systemDefault())
         val token : String? = JWTGenerator().createJWT(
+            data.id.toString(),
             reqLoginDto.username!!,
-            reqLoginDto.password!!,
             expiredJwt
         )
         val dataEntity = TokenEntity(
